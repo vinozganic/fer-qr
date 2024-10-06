@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Ticket Details</title>
+    </head>
+    <body>
+        <%- include('../partials/userDetails') %>
+        <h1>Ticket Details</h1>
+        <p>OIB: <%= ticket.vatin %></p>
+        <p>Name: <%= `${ticket.firstName} ${ticket.lastName}` %></p>
+        <p>Created: <%= ticket.created %></p>
+    </body>
+</html>

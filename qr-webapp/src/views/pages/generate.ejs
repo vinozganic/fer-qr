@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Generate a ticket</title>
+    </head>
+    <body>
+        <%- include('../partials/userDetails') %>
+        <h1>Generate a Ticket</h1>
+        <form action="/generate" method="post">
+            <label for="vatin">VATIN:</label>
+            <input type="text" id="vatin" name="vatin" required />
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required />
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required />
+            <button type="submit">Generate</button>
+        </form>
+        <% if (locals.ticketQrCode) { %>
+            <h2>Generated Ticket QR Code:</h2>
+            <img src="<%= ticketQrCode %>" alt="Ticket QR Code">
+        <% } %>
+        <% if (locals.error) { %>
+            <p style="color: red;"><%= error %></p>
+        <% } %>
+    </body>
+</html>

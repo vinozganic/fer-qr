@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: qr-database
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: qr-database
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1234
+    restart: always
+    ports:
+      - "5435:5432"
