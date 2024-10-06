@@ -23,9 +23,4 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             }),
         });
     }
-
-    async validate(payload: any) {
-        // Optionally, add custom validation or attach properties to the request object
-        return payload;
-    }
 }
