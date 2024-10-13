@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
+import { JwtValidateDto } from '../dtos/jwt-validate.dto';
 import * as jwksRsa from 'jwks-rsa';
 
 @Injectable()
@@ -22,5 +23,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
                 jwksRequestsPerMinute: 5,
             }),
         });
+    }
+
+    async validate(payload: JwtValidateDto) {
+        // You can perform additional validation here if needed
+        return { userId: payload.sub };
     }
 }

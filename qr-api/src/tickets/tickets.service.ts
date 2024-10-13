@@ -30,7 +30,7 @@ export class TicketsService {
             vatin: generateTicketDto.vatin,
         });
 
-        if (matchingTicketsCount > 3) throw new BadRequestException('VATIN already has 3 tickets');
+        if (matchingTicketsCount >= 3) throw new BadRequestException('VATIN already has 3 tickets');
 
         const ticket = this.ticketsRepository.create({
             vatin: generateTicketDto.vatin,
