@@ -1,15 +1,20 @@
 import { Router } from 'express';
 import { getTicketCount, generateTicket, getTicketByUuid } from '../services/apiService';
 import { requiresAuth } from 'express-openid-connect';
+import { handleErrorRoute } from '../utils/handleErrorRoute';
 
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const ticketCount = await getTicketCount();
-    res.render('pages/home', {
-        user: req.oidc?.user,
-        ticketCount,
-    });
+    try {
+        const ticketCount = await getTicketCount();
+        res.render('pages/home', {
+            user: req.oidc?.user,
+            ticketCount,
+        });
+    } catch (error: any) {
+        handleErrorRoute(res, error);
+    }
 });
 
 router.get('/generate', (req, res) => {
@@ -19,17 +24,29 @@ router.get('/generate', (req, res) => {
 
 router.post('/generate', async (req, res) => {
     const { vatin, firstName, lastName } = req.body;
-    const ticketQrCode = await generateTicket(vatin, firstName, lastName);
-    res.redirect(`/generate?ticketQrCode=${encodeURIComponent(ticketQrCode)}`);
+    try {
+        const ticketQrCode = await generateTicket(vatin, firstName, lastName);
+        res.redirect(`/generate?ticketQrCode=${encodeURIComponent(ticketQrCode)}`);
+    } catch (error: any) {
+        handleErrorRoute(res, error);
+    }
 });
 
-router.get('/ticket/:uuid', requiresAuth(), async (req, res) => {
-    const ticketDetails = await getTicketByUuid(req.params.uuid);
-    res.render('pages/ticket', { ticket: ticketDetails });
+router.get('/tickets/:uuid', requiresAuth(), async (req, res) => {
+    try {
+        const ticketDetails = await getTicketByUuid(req.params.uuid);
+        res.render('pages/ticket', { ticket: ticketDetails });
+    } catch (error: any) {
+        handleErrorRoute(res, error);
+    }
 });
 
 router.get('/callback', (req, res) => {
     res.redirect('/');
+});
+
+router.get('/error', (req, res) => {
+    res.render('pages/error', { error: { code: req.query.code, message: req.query.message } });
 });
 
 export default router;

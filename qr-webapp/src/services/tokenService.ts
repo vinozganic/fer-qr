@@ -30,10 +30,8 @@ export const getM2MAccessToken = async (): Promise<string> => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-
         return response.data.access_token;
     } catch (error) {
-        console.error('Error fetching access token:', error);
         throw error;
     }
 };
