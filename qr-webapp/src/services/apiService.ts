@@ -34,9 +34,13 @@ export const generateTicket = async (vatin: string, firstName: string, lastName:
     }
 };
 
-export const getTicketByUuid = async (uuid: string): Promise<TicketDto> => {
+export const getTicketByUuid = async (uuid: string, accessToken?: string): Promise<TicketDto> => {
     try {
-        const response = await axios.get(`${process.env.API_SERVICE_URL}/tickets/${uuid}`);
+        const headers: any = {};
+        if (accessToken) {
+            headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+        const response = await axios.get(`${process.env.API_SERVICE_URL}/tickets/${uuid}`, { headers });
         return response.data as TicketDto;
     } catch (error) {
         handleApiError(error);

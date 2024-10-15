@@ -36,11 +36,24 @@ const authConfig = {
     secret: process.env.AUTH0_SECRET,
     baseURL: process.env.BASE_URL,
     clientID: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
     issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
+    authorizationParams: {
+        response_type: 'code',
+        audience: 'qr-api-example.com',
+        scope: 'openid profile email',
+        prompt: 'consent',
+    },
 };
 app.use(auth(authConfig));
 app.use((req, res, next) => {
     res.locals.user = req.oidc.user;
+    next();
+});
+
+// Cache control headers
+app.use(function (req, res, next) {
+    res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
 });
 

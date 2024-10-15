@@ -34,7 +34,8 @@ router.post('/generate', async (req, res) => {
 
 router.get('/tickets/:uuid', requiresAuth(), async (req, res) => {
     try {
-        const ticketDetails = await getTicketByUuid(req.params.uuid);
+        const accessToken = req.oidc.accessToken?.access_token;
+        const ticketDetails = await getTicketByUuid(req.params.uuid, accessToken);
         res.render('pages/ticket', { ticket: ticketDetails });
     } catch (error: any) {
         handleErrorRoute(res, error);
