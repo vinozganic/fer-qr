@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { getTicketCount, getTicketByUuid } from '../services/apiService';
 import { requiresAuth } from 'express-openid-connect';
 import { handleErrorRoute } from '../utils/handleErrorRoute';
+import { formatInTimeZone } from 'date-fns-tz';
 
 const router = Router();
 
@@ -39,7 +40,7 @@ router.get('/tickets/:uuid', requiresAuth(), async (req, res) => {
     try {
         const accessToken = req.oidc.accessToken?.access_token;
         const ticketDetails = await getTicketByUuid(req.params.uuid, accessToken);
-        res.render('pages/ticket', { ticket: ticketDetails });
+        res.render('pages/ticket', { ticket: ticketDetails, formatInTimeZone });
     } catch (error: any) {
         handleErrorRoute(res, error);
     }

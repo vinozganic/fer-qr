@@ -8,6 +8,6 @@
         <h1>Ticket Details</h1>
         <p>Creator's OIB: <%= ticket.vatin %></p>
         <p>Ticket created by: <%= `${ticket.firstName} ${ticket.lastName}` %></p>
-        <p>Time created: <%= new Date(ticket.created).toLocaleString('hr-HR') %></p>
+        <p>Time created: <%= formatInTimeZone(new Date(ticket.created), 'Europe/Zagreb', 'dd. MM. yyyy. - HH:mm') %></p>
     </body>
 </html>
