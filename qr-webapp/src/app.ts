@@ -4,10 +4,14 @@ import session from 'express-session';
 import { auth } from 'express-openid-connect';
 import helmet from 'helmet';
 import routes from './routes/index';
+import FileStore from 'session-file-store';
 import * as dotenv from 'dotenv';
 
 // Initialize dotenv
 dotenv.config();
+
+// Initialize session file store
+const fileStore = FileStore(session);
 
 const app = express();
 
@@ -22,6 +26,9 @@ app.set('view engine', 'ejs');
 
 app.use(
     session({
+        store: new fileStore({
+            path: './sessions',
+        }),
         secret: process.env.SESSION_SECRET ?? 'default-secret',
         resave: false,
         saveUninitialized: true,
