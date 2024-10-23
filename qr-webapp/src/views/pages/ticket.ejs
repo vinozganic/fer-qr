@@ -6,8 +6,8 @@
     <body>
         <%- include('../partials/userDetails') %>
         <h1>Ticket Details</h1>
-        <p>OIB: <%= ticket.vatin %></p>
-        <p>Name: <%= `${ticket.firstName} ${ticket.lastName}` %></p>
-        <p>Created: <%= ticket.created %></p>
+        <p>Creator's OIB: <%= ticket.vatin %></p>
+        <p>Ticket created by: <%= `${ticket.firstName} ${ticket.lastName}` %></p>
+        <p>Time created: <%= new Date(ticket.created).toLocaleString('hr-HR') %></p>
     </body>
 </html>

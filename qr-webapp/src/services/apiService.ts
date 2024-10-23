@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { getM2MAccessToken } from './tokenService';
 import { TicketDto } from '../dtos/ticketDto';
 import { handleApiError } from '../utils/handleApiError';
 
@@ -12,27 +11,30 @@ export const getTicketCount = async (): Promise<number> => {
     }
 };
 
-export const generateTicket = async (vatin: string, firstName: string, lastName: string): Promise<string> => {
-    const token = await getM2MAccessToken();
-    try {
-        const response = await axios.post(
-            `${process.env.API_SERVICE_URL}/tickets/generate`,
-            {
-                vatin,
-                firstName,
-                lastName,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
-        return response.data;
-    } catch (error) {
-        handleApiError(error);
-    }
-};
+/*
+generateTicket method commented out because professor said it's an excess feature
+*/
+// export const generateTicket = async (vatin: string, firstName: string, lastName: string): Promise<string> => {
+//     const token = await getM2MAccessToken();
+//     try {
+//         const response = await axios.post(
+//             `${process.env.API_SERVICE_URL}/tickets/generate`,
+//             {
+//                 vatin,
+//                 firstName,
+//                 lastName,
+//             },
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${token}`,
+//                 },
+//             }
+//         );
+//         return response.data;
+//     } catch (error) {
+//         handleApiError(error);
+//     }
+// };
 
 export const getTicketByUuid = async (uuid: string, accessToken?: string): Promise<TicketDto> => {
     try {

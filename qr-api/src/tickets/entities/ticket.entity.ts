@@ -17,6 +17,6 @@ export class Ticket {
     @Column()
     lastName: string;
 
-    @CreateDateColumn()
+    @CreateDateColumn({ type: 'timestamp with time zone' })
     created: Date;
 }

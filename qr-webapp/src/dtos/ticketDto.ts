@@ -3,5 +3,5 @@ export interface TicketDto {
     vatin: string;
     firstName: string;
     lastName: string;
-    created: Date;
+    created: string;
 }

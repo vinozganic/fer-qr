@@ -2,7 +2,7 @@
     <a href="/"><button>Home</button></a>
     <% if (user) { %>
         <div>
-            <p>Welcome, <%= user.name %>!</p>
+            <p>Currently logged in: <%= user.name %></p>
             <a href="/logout"><button>Logout</button></a>
         </div>
     <% } else { %>

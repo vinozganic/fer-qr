@@ -32,6 +32,6 @@ export const getM2MAccessToken = async (): Promise<string> => {
 
         return response.data.access_token;
     } catch (error) {
-        throw error;
+        throw error; // temporary error handling
     }
 };
