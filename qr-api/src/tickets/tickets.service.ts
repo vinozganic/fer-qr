@@ -25,7 +25,7 @@ export class TicketsService {
         return ticket;
     }
 
-    async generateTicket(@Body() generateTicketDto: GenerateTicketDto): Promise<string> {
+    async generateTicket(generateTicketDto: GenerateTicketDto): Promise<Buffer> {
         const [, matchingTicketsCount] = await this.ticketsRepository.findAndCountBy({
             vatin: generateTicketDto.vatin,
         });
@@ -43,6 +43,6 @@ export class TicketsService {
 
         const ticketUrl = `${process.env.FRONTEND_URL}/tickets/${savedTicket.uuid}`;
 
-        return this.qrService.generateQrDataUrl(ticketUrl);
+        return this.qrService.generateQrBuffer(ticketUrl);
     }
 }

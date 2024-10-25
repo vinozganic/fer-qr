@@ -5,9 +5,9 @@ import * as QRCode from 'qrcode';
 export class QrService {
     constructor() {}
 
-    async generateQrDataUrl(url: string): Promise<string> {
+    async generateQrBuffer(url: string): Promise<Buffer> {
         try {
-            return await QRCode.toDataURL(url);
+            return await QRCode.toBuffer(url);
         } catch (error) {
             console.error('Error generating QR code:', error);
             throw new BadRequestException('Failed to generate QR code');

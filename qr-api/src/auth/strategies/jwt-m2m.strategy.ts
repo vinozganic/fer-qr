@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { JwtValidatePayloadDto } from '../dtos/jwt-validate.dto';
@@ -24,6 +24,12 @@ export class JwtM2MStrategy extends PassportStrategy(Strategy, 'jwt-m2m') {
     }
 
     async validate(payload: JwtValidatePayloadDto) {
+        const requiredGrantType = 'client-credentials';
+        const grant_type = payload.gty ? payload.gty.split(' ') : [];
+
+        if (!grant_type.includes(requiredGrantType))
+            throw new UnauthorizedException(`Required grant type '${requiredGrantType}' not found`);
+
         return { userId: payload.sub };
     }
 }

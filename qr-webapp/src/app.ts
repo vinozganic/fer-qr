@@ -6,12 +6,10 @@ import helmet from 'helmet';
 import routes from './routes/index';
 import FileStore from 'session-file-store';
 import * as dotenv from 'dotenv';
+import fs from 'fs';
 
 // Initialize dotenv
 dotenv.config();
-
-// Initialize session file store
-const fileStore = FileStore(session);
 
 const app = express();
 
@@ -24,10 +22,14 @@ app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Initialize session file store
+const fileStore = FileStore(session);
+const sessionsPath = path.join(__dirname, '../sessions');
+if (!fs.existsSync(sessionsPath)) fs.mkdirSync(sessionsPath);
 app.use(
     session({
         store: new fileStore({
-            path: './sessions',
+            path: sessionsPath,
         }),
         secret: process.env.SESSION_SECRET ?? 'default-secret',
         resave: false,
